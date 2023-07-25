@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  ui:
+    build: ./ui
+    ports:
+      - 80:80
+    depends_on:
+      - api
+
+  api:
+    build: .  # Build the service using the Dockerfile located in the current directory
+    ports:
+      - 8080:8080  # Map port 8080 of the host machine to port 8080 of the service container
+    restart: on-failure  # Automatically restart the container if it fails
+
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pw
+      - MYSQL_DATABASE=mydb
+
